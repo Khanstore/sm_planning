@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data >
+        <record id="gender_male" model="pmis.gender">
+            <field name="name" >Male</field>
+        </record>
+        <record id="gender_female" model="pmis.gender">
+            <field name="name" >Female</field>
+        </record>
+        <record id="marital_status_married" model="pmis.marital">
+            <field name="status" >Married</field>
+        </record>
+        <record id="marital_status_divorced" model="pmis.marital">
+            <field name="status" >Divorced</field>
+        </record>
+        <record id="marital_status_unmarried" model="pmis.marital">
+            <field name="status" >Unmarried</field>
+        </record>
+
+        <record id="religion_islam" model="pmis.religion">
+            <field name="name">Islam</field>
+            <field name="abv">Islam</field>
+        </record>
+        <record id="religion_hindu" model="pmis.religion">
+            <field name="name">Hindu</field>
+            <field name="abv">Hindu</field>
+        </record>
+        <record id="religion_christian" model="pmis.religion">
+            <field name="name">Christian</field>
+            <field name="abv">Chr</field>
+        </record>
+        <record id="religion_buddist" model="pmis.religion">
+            <field name="name">Buddist</field>
+            <field name="abv">Budd</field>
+        </record>
+        <record id="pmis_contact_ashraf" model="res.partner">
+            <field name="name">Mohammad Ashraf Uzzaman</field>
+            <field name="name_bn">মোহাম্মদ আশ্রাফ উজ্জামান</field>
+            <field name="contact_type" ref="pmis.pmis_contact_type_person"/>
+            <field name="father_name">Ahmed Sheikh</field>
+            <field name="father_name_bn">আহাম্মদ শেখ</field>
+            <field name="mother_name">Sufia Khatun</field>
+            <field name="mother_name_bn">সুফিয়া খাতুন</field>
+            <field name="image_1920" type="base64" file="pmis/static/src/img/ashraf.jpg"/>
+<!--            <field name="spouse" ref="pmis.pmis_contact_2"/>-->
+            <field name="street">Rasul Pur</field>
+            <field name="street2">Kamargaon</field>
+            <field name="city">Comilla Sadar</field>
+            <field name="state_id" ref="base.state_bd_comilla"/>
+            <field name="country_id" ref="base.bd"/>
+            <field name="mobile">01720569256</field>
+            <field name="phone">01970569256</field>
+            <field name="religion" ref="pmis.religion_islam"/>
+            <field name="gender" ref="pmis.gender_male"/>
+            <field name="marital" ref="pmis.gender_male"/>
+            <field name="freedom_fighter" >no</field>
+            <field name="dob">1977-03-10</field>
+            <field name="nid_no">1234523456</field>
+            <field name="email">dmashraf@gmail.com</field>
+            <field name="govt_id" >12344321</field>
+            <field name="bcs_id" ref="pmis.pmis_bcs_24"/>
+            <field name="bcs_cadre" ref="pmis.pmis_bcs_cadre_admin"/>
+        </record>
+        <record id="pmis_contact_2" model="res.partner">
+            <field name="name">Sharmin Akter</field>
+            <field name="name_bn">শারমিন আক্তার</field>
+<!--            <field name="father_name">MOHAMMAD YUNUS</field>-->
+<!--            <field name="mother_name">LUTFUNNESA BEGUM</field>-->
+<!--            <field name="street">659, Mohana, Talpukurpar</field>-->
+            <field name="street2">Comilla H/Office</field>
+            <field name="city">Comilla Sadar</field>
+            <field name="state_id" ref="base.state_bd_comilla"/>
+            <field name="country_id" ref="base.bd"/>
+            <field name="occupation">Student</field>
+            <field name="spouse" ref="pmis.pmis_contact_ashraf"/>
+<!--            <field name="mobile">01833676777</field>-->
+<!--            <field name="phone">01833676777</field>-->
+<!--            <field name="religion" ref="pmis.religion_islam"/>-->
+<!--            <field name="gender" ref="pmis.gender_male"/>-->
+<!--            <field name="marital" ref="pmis.gender_male"/>-->
+<!--            <field name="freedom_fighter" >no</field>-->
+<!--            <field name="dob">1977-03-10</field>-->
+<!--            <field name="nid_no">1911872736915</field>-->
+<!--            <field name="email">saiful15701@yahoo.com</field>-->
+<!--            <field name="govt_id" >12344321</field>-->
+<!--            <field name="bcs_id" ref="pmis.marital_status_married"/>-->
+<!--            <field name="bcs_cadre" ref="pmis.pmis_bcs_cadre_admin"/>-->
+        </record>
+               <record id="pmis_contact_ashraf" model="res.partner">
+                       <field name="spouse" ref="pmis.pmis_contact_2"/>
+               </record>
+
+
+<record id="pmis_langage_profe_1" model="pmis.language.proficiency">
+            <field name="person_id" ref="pmis_contact_ashraf"/>
+            <field name="name" ref="base.lang_bn_IN"/>
+            <field name="can_read">True</field>
+            <field name="can_write">True</field>
+            <field name="can_speak">True</field>
+          </record>
+        <record id="pmis_langage_profe_2" model="pmis.language.proficiency">
+            <field name="person_id" ref="pmis_contact_ashraf"/>
+            <field name="name" ref="base.lang_en"/>
+            <field name="can_read">True</field>
+            <field name="can_write">True</field>
+            <field name="can_speak">False</field>
+          </record>
+        <record id="pmis_langage_profe_3" model="pmis.language.proficiency">
+            <field name="person_id" ref="pmis_contact_ashraf"/>
+            <field name="name" ref="base.lang_ur"/>
+            <field name="can_read">True</field>
+            <field name="can_write">True</field>
+            <field name="can_speak">False</field>
+          </record>
+        <record id="pmis_langage_profe_4" model="pmis.language.proficiency">
+            <field name="person_id" ref="pmis_contact_ashraf"/>
+            <field name="name" ref="base.lang_ar"/>
+            <field name="can_read">False</field>
+            <field name="can_write">False</field>
+            <field name="can_speak">True</field>
+          </record>
+          <record id="pmis_langage_profe_5" model="pmis.language.proficiency">
+            <field name="person_id" ref="pmis_contact_ashraf"/>
+            <field name="name" ref="base.lang_hi_IN"/>
+            <field name="can_read">False</field>
+            <field name="can_write">False</field>
+            <field name="can_speak">True</field>
+          </record>
+
+        <record id="posting_record_1" model="pmis.posting.record">
+            <field name="partner_id" ref="pmis.pmis_contact_ashraf"/>
+            <field name="go_date">2019-01-23</field>
+            <field name="joining_date">2019-01-24</field>
+<!--            <field name="till_date"></field>-->
+            <field name="designation" ref="pmis.designation_dd"/>
+<!--            <field name="rank" ref="pmis.designation_dd"/>-->
+            <field name="organisation" ref="pmis.organisation_tourism_board"/>
+        </record>
+
+        <record id="pmis_childeren_ashfia" model="pmis.children">
+<!--            <field name="child_of_ids" eval="[(6, 0, [ref('pmis.pmis_contact_ashraf')])]" />-->
+
+            <field name="name" >Ashfia Unaisha</field>
+            <field name="sex" ref="gender_female" />
+            <field name="dob" >2011-09-04</field>
+        </record>
+<record id="pmis_childeren_safa" model="pmis.children">
+<!--            <field name="child_of_ids" eval="[(6, 0, [ref('pmis.pmis_contact_ashraf')])]" />-->
+
+            <field name="name" >Sofia Iffat Safa</field>
+            <field name="sex" ref="gender_female" />
+            <field name="dob" >2018-09-04</field>
+        </record>
+
+<record id="pmis_childeren_marwa" model="pmis.children">
+
+            <field name="name" >Arisha Marwa Zaman</field>
+            <field name="sex" ref="gender_female" />
+            <field name="dob" >2022-12-22</field>
+        </record>
+<record id="pmis_contact_ashraf" model="res.partner">
+<!--   following line creates relation into many2many fields -->
+    <field name="children_ids" eval="[Command.set([ref('pmis_childeren_ashfia'), ref('pmis_childeren_safa'), ref('pmis_childeren_marwa')])]" />
+</record>
+
+    </data>
+</odoo>

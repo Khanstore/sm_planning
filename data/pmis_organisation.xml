@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="0">
+
+    <record id="pmis.div_comm_office_dhaka" model="res.partner">
+        <field name="name">DIV COMM OFFICE DHAKA</field>
+    </record>
+    <record id="organisation_tourism_board" model="res.partner">
+            <field name="name">TOURISM BOARD</field>
+            <field name="state_id" ref='base.state_us_5'/>
+        </record>
+    <record id="organisation_bpatc" model="res.partner">
+            <field name="name">BPATC Savar</field>
+            <field name="state_id" ref='base.state_us_5'/>
+        </record>
+    <record id="organisation_cumilla_zila_school" model="res.partner">
+            <field name="name">Comilla Zila School</field>
+            <field name="contact_type" ref='pmis.pmis_contact_type_education'/>
+            <field name="state_id" ref='base.state_bd_comilla'/>
+        </record>
+    <record id="organisation_cumilla_victoria_college" model="res.partner">
+            <field name="name">Victoria College,Cumilla</field>
+        <field name="contact_type" ref='pmis.pmis_contact_type_education'/>
+            <field name="state_id" ref='base.state_bd_comilla'/>
+        </record>
+    <record id="organisation_dhaka_university" model="res.partner">
+            <field name="name">Dhaka University</field>
+        <field name="contact_type" ref='pmis.pmis_contact_type_education'/>
+            <field name="state_id" ref='base.state_bd_dhaka'/>
+        </record>
+    <record id="organisation_bcs_admin" model="res.partner">
+            <field name="name">BCS(ADMN) ACADEMY</field>
+                <field name="contact_type" ref='pmis.pmis_contact_type_posting'/>
+
+            <field name="state_id" ref='base.state_us_5'/>
+        </record>
+    <record id="organisation_bcs_financial_mangement" model="res.partner">
+            <field name="name">FINANCIAL MNGMT REFORM PROGRAM</field>
+        <field name="contact_type" ref='pmis.pmis_contact_type_posting'/>
+            <field name="state_id" ref='base.state_us_5'/>
+        </record>
+    <record id="organisation_land_admin_admin" model="res.partner">
+            <field name="name">LAND ADMN TRAINING CENTRE</field>
+                <field name="contact_type" ref='pmis.pmis_contact_type_posting'/>
+
+            <field name="state_id" ref='base.state_us_5'/>
+        </record>
+
+   <record id="organisation_bma" model="res.partner">
+            <field name="name">BMA</field>
+               <field name="contact_type" ref='pmis.pmis_contact_type_posting'/>
+
+            <field name="state_id" ref='base.state_bd_chittagong'/>
+        </record>
+
+    <record id="designation_ac_prob" model="pmis.designation">
+        <field name="grade">6</field>
+        <field name="name">Assistant Commissioner (probetion)</field>
+
+        <field name="abv">AC(prob)</field>
+    </record>
+    <record id="designation_ac" model="pmis.designation">
+        <field name="grade">6</field>
+        <field name="name">Assistant Commissioner</field>
+        <field name="abv">AC</field>
+    </record>
+    <record id="designation_dd" model="pmis.designation">
+        <field name="grade">6</field>
+        <field name="name">DEPUTY DIRECTOR </field>
+        <field name="abv">DD</field>
+    </record>
+
+
+
+    <record id="pmis.degree_ssc" model="pmis.degree">
+        <field name="degree">Secoundary School Certificate</field>
+        <field name="abv">SSC</field>
+    </record>
+    <record id="pmis.degree_hsc" model="pmis.degree">
+        <field name="degree">Higher Secoundary School Certificate</field>
+        <field name="abv">HSC</field>
+    </record>
+    <record id="pmis.degree_honours" model="pmis.degree">
+        <field name="degree"> BSC Honours</field>
+        <field name="abv">Hon</field>
+    </record>
+    <record id="pmis.degree_honours" model="pmis.degree">
+        <field name="degree"> BSC Honours</field>
+        <field name="abv">Hon</field>
+    </record>
+
+
+</odoo>

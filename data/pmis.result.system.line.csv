@@ -1,0 +1,7 @@
+id,grading_system/id,name
+pmis_result_systen_Line_1st_division,pmis.pmis_result_systen_division,1st Div
+pmis_result_systen_Line_2nd_division,pmis.pmis_result_systen_division,2nd Div
+pmis_result_systen_Line_3rd_division,pmis.pmis_result_systen_division,3rd Div
+pmis_result_systen_Line_1st_class,pmis.pmis_result_systen_class,1st Class
+pmis_result_systen_Line_2nd_class,pmis.pmis_result_systen_class,2nd class
+pmis_result_systen_Line_3rd_class,pmis.pmis_result_systen_class,3rd class

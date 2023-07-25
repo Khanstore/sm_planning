@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sm_planning_partner_report" model="ir.actions.report">
+        <field name="name">Print Swis Report</field>
+        <field name="model">planning.slot</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sm_planning.sm_planning_slot</field>
+        <!--        <field name="report_file">hr.print_person_badge</field>-->
+        <!--        <field name="print_report_name">'Print Badge - %s' % (object.name).replace('/', '')</field>-->
+        <field name="binding_model_id" ref="planning.model_planning_slot"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="sm_planning_slot">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <t t-esc="doc"/>
+                <div class="page">
+                    <div class="container" style="padding:5px;">
+                        <div class="row" style="width:100%;">
+                            <div class="col" style="width:20%;  padding-left:10px;">
+                                <t t-esc="doc.resource_id.name"/>
+                            </div>
+                            <div class="col" style="width:20%;  padding-left:10px;">
+                                <t t-esc="doc.agent_id.name"/>
+                            </div>
+                            < class="col" style="width:10%;  padding-left:10px;">
+                                <t t-esc="doc.start_datetime.strftime('%H %M')"/>
+                                <t t-esc="doc.end_datetime.strftime('%H %M')"/>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </t>
+
+        </t>
+    </template>
+
+</odoo>

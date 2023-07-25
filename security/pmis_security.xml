@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<data noupdate="0">
+<record model="ir.module.category" id="pmis_security_group">
+            <field name="name">PMIS</field>
+            <field name="description">Personal Infrmation Management System</field>
+            <field name="sequence">20</field>
+    </record>
+    <record id="pmis_own_doc_group" model="res.groups">
+        <field name="name">PMIS security Group</field>
+        <field name="comment">PMIS  Permission Group.</field>
+        <field name="category_id" ref="pmis.pmis_security_group"/>
+    </record>
+
+</data>
+</odoo>

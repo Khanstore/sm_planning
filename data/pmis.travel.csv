@@ -1,0 +1,4 @@
+id,person_id/id,country_id/id,purpose,from_date,till_date
+pmis_travel_1,pmis_contact_ashraf,base.in,other,2002-10-14,2002-10-21
+pmis_travel_2,pmis_contact_ashraf,base.in,other,2005-6-10,2005-6-18
+pmis_travel_3,pmis_contact_ashraf,base.in,Study Tour,2006-5-29,2006-6-7

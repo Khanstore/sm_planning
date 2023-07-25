@@ -1,0 +1,2 @@
+"id","name","code","iso_code","direction","grouping","decimal_point","thousands_sep","date_format","time_format","week_start"
+"base.lang_ur","Urdu / اردو","urd","ur","Right-to-Left","[3,0]",".",",","%d %b, %Y","%I:%M:%S","6"

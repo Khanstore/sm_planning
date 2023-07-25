@@ -1,0 +1,17 @@
+<odoo>
+  <data>
+    <!-- explicit list view definition -->
+      <record id="sm_planning_slot_form_inherit" model="ir.ui.view">
+        <field name="name">sm.planning.slot.form.inheri</field>
+        <field name="inherit_id" ref="planning.planning_view_form"/>
+        <field name="priority" eval="1"/>
+        <field name="model">planning.slot</field>
+        <field name="arch" type="xml">
+                <field name="role_id" position="after">
+                    <field name="agent_id" placeholder="e.g. Shop Agent"/>
+                </field>
+        </field>
+</record>
+
+  </data>
+</odoo>

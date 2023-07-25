@@ -1,0 +1,10 @@
+id,country_id/id,id,from_date,institution_id/id,partner_id/id,position,till_date,training_id/id,category_id/id
+pmis.training_36_foundation_4_contact_1,,pmis.training_36_foundation_4_contact_1,2021-03-03,pmis.organisation_bpatc,pmis.pmis_contact_ashraf,5th,2021-03-04,pmis.training_36_foundation,pmis.local_trining_mandatorey
+pmis.training_60_Law_adm_4_contact_1,,pmis.training_60_Law_adm_4_contact_1,2021-03-03,pmis.organisation_bcs_admin,pmis.pmis_contact_ashraf,18th,2021-03-04,pmis.training_60_Law_adm,pmis.local_trining_mandatorey
+pmis.training_fiscal_economics_and_economic_Management4_contact_1,,pmis.training_fiscal_economics_and_economic_Management4_contact_1,2009-02-22,pmis.organisation_bcs_financial_mangement,pmis.pmis_contact_ashraf,,2009-05-04,pmis.training_fiscal_economy,pmis.local_trining
+__export__.pmis_training_line_7_a8dc40a7,,__export__.pmis_training_line_7_a8dc40a7,2009-05-05,pmis.organisation_bcs_financial_mangement,pmis.pmis_contact_ashraf,,2009-07-05,pmis.training_best,pmis.local_trining
+__export__.pmis_training_line_8_f293cbf9,,__export__.pmis_training_line_8_f293cbf9,2010-02-07,pmis.organisation_land_admin_admin,pmis.pmis_contact_ashraf,,2010-02-11,pmis.training_land_Management,pmis.local_trining
+__export__.pmis_training_line_9_2baa72dd,,__export__.pmis_training_line_9_2baa72dd,2010-04-25,pmis.organisation_bma,pmis.pmis_contact_ashraf,,2010-06-03,pmis.training_bcs_orientation_course,pmis.local_trining
+__export__.pmis_training_line_10_7ec3459c,base.in,__export__.pmis_training_line_10_7ec3459c,2006-06-19,,pmis.pmis_contact_ashraf,,2006-06-25,pmis.training_management_development,pmis.foreign_training
+__export__.pmis_training_line_11_3366ecbe,base.jp,__export__.pmis_training_line_11_3366ecbe,2010-08-01,,pmis.pmis_contact_ashraf,,2012-10-31,pmis.training_masters_public_administration,pmis.foreign_training
+__export__.pmis_training_line_12_1edd5565,base.in,__export__.pmis_training_line_12_1edd5565,2015-10-27,,pmis.pmis_contact_ashraf,,2015-11-08,pmis.training_mid_career_training_programme,pmis.foreign_training

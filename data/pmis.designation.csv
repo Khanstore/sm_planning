@@ -1,0 +1,12 @@
+id,grade,name,abv
+pmis_designation_1,1,Chairman,CM
+pmis_designation_2,2,Chief Of Executive ,CEO
+pmis_designation_3,2,Director ,Dir
+pmis_designation_4,3,Director ,Dir
+pmis_designation_5,5,Deputy Director ,DD
+pmis_designation_8,9,Asst Director ,AD
+pmis_designation_9,9,Account officer ,Ac
+pmis_designation_10,9,Assistant Programmer ,AP
+pmis_designation_11,9,Assistant Engineer(Civil) ,AE
+pmis_designation_12,10,Deputy Assistant Engineer(Civil) ,DE
+pmis_designation_13,10,Officer Admin ,Admn
