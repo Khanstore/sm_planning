@@ -8,7 +8,10 @@ from dateutil import relativedelta
 from odoo.osv.expression import get_unaccent_wrapper
 import re
 
+class PlanningRole(models.Model):
+    _inherit = 'planning.role'
 
+    description =fields.Char("Description")
 class planningSlot(models.Model):
     _inherit = "planning.slot"
     agent_id=fields.Many2one('res.partner',string="agent")
@@ -61,7 +64,7 @@ class SMplanningSlot(models.TransientModel):
             'planning_slots':res,
         }
 
-class HrHolidaySummaryReport(models.AbstractModel):
+class SmSwissReport(models.AbstractModel):
     _name = 'report.sm_planning.sm_swis_report'
 
     def get_data(self,res): #here res is planning.slot in the date range
