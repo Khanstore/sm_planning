@@ -12,6 +12,23 @@
                 </field>
         </field>
 </record>
+      <record id="sm_swis_report_wizard" model="ir.ui.view">
+        <field name="name">sm.swis.report.wizerd</field>
+        <field name="priority" eval="1"/>
+        <field name="model">sm.swis.report</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+
+                    <field name="resource_ids" widget="many2many_tags" />
+                    <field name="month" />
+                    <field name="year" />
+                </group>
+
+            </form>
+
+        </field>
+</record>
 
   </data>
 </odoo>
