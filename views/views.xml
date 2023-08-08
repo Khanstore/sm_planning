@@ -29,17 +29,45 @@
         <field name="model">sm.swis.report</field>
         <field name="arch" type="xml">
             <form>
-                <group>
+                <sheet>
 
-                    <field name="resource_ids" widget="many2many_tags" />
-                    <field name="month" />
-                    <field name="year" />
-                </group>
+                    <group>
+
+                        <field name="resource_ids" widget="many2many_tags" />
+                        <field name="month" />
+                        <field name="year" />
+                    </group>
+                </sheet>
 
             </form>
 
         </field>
 </record>
+      <record id="action_open_sm_swis_report" model="ir.actions.act_window">
+            <field name="name">Pipeline Analysis</field>
+            <field name="res_model">sm.swis.report</field>
+            <field name="view_mode">form</field>
+<!--            <field name="search_view_id" ref="crm.crm_opportunity_report_view_search"/>-->
+<!--            <field name="context">{'search_default_filter_opportunity': True, 'search_default_current': True}</field>-->
+            <!--<field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'graph', 'view_id': ref('crm_opportunity_report_view_graph')}),
+                          (0, 0, {'view_mode': 'pivot', 'view_id': ref('crm_opportunity_report_view_pivot')}),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('crm_case_tree_view_oppor')})]"/>-->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No data found!
+                </p><p>
+                    Use this menu to have an overview of your Planning.
+                </p>
+            </field>
+        </record>
+    <menuitem
+        id="sm_planning_menu_report"
+        name="Planning Report"
+        action="action_open_sm_swis_report"
+        sequence="10" parent="planning.planning_menu_reporting"
+        groups="planning.group_planning_user"/>
 
   </data>
 </odoo>

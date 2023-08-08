@@ -75,6 +75,7 @@ class SmSwissReport(models.AbstractModel):
             date_day = rec.start_datetime.day
             agent_data = {}
             date_data = {}
+
             if not person_id in data:
                 personal_data = {}
                 # todo customise string for printing
@@ -96,6 +97,12 @@ class SmSwissReport(models.AbstractModel):
                 data[person_id][agent_id][date_day]=string
 
         return data
+    def get_roles(self,res):
+        roles = []
+        for rec in res:
+            if not rec.role_id in roles:
+                roles.append(rec.role_id)
+        return roles
 
 
 
@@ -123,4 +130,5 @@ class SmSwissReport(models.AbstractModel):
             'year':year,
             'days_in_month':days_in_month,
             'data':self.get_data(res),
+            'roles':self.get_roles(res),
         }
