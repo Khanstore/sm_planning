@@ -28,83 +28,79 @@
             <t t-foreach="docids" t-as="doc">
                 <t t-call="web.internal_layout">
                     <style>
-                        <!--.group_head {
-                        border-width: 1px;
-                        border-color: #cccccc;
-                        border:1px solid black;
-                        border-collapse: collapse;
-                        text-align:center;
-&lt;!&ndash;                        background-color: #A3A3A3;&ndash;&gt;
-                        }-->
-<!--                        .group_data {-->
-<!--                        font-size: 14px;-->
-<!--                        border-width: 1px;-->
-<!--                        border-color: #cccccc;-->
-<!--                        border:1px solid black;-->
-<!--                        border-collapse: collapse;-->
-<!--                        text-align:center;-->
-<!--                        }-->
-                        .border > div {
-                            display: table-cell;
-                            text-align:center;
-                              border: 1px solid gray;
-                              border-left: 0;
-                              border-spacing: 0px;
-                              background-color:  #fffff7;
-                              padding: 5px;
-                              font-size: 20px;
+                        .table {
+                            display: table;
                             }
 
+                            .table-header {
+                            display: table-header-group;
+                            font-weight: bold;
+                            background-color: rgb(191, 191, 191);
+                            }
 
+                            .table-body {
+                            display: table-row-group;
+                            }
 
-                        <!--.person {
-                        font-size: 9px;
-                        width:5%;
-                        border-width: 1px;
-                        border-color: #cccccc;
-                        border:1px solid black;
-                        border-collapse: collapse;
-                        text-align:center;
-                        }-->
+                            .table-row {
+                            display: table-row;
+                            }
+
+                            .table-header div,
+                            .table-row div {
+                            display: table-cell;
+<!--                            padding: 0 6px;-->
+                            }
+
+                            .table-header div {
+                            text-align: center;
+                            border: 1px solid rgb(255, 255, 255);
+                            }
                     </style>
                     <div class="page">
                         <div class="container" style="padding:5px;">
-                            <div class="row border" id="heading" style="width:100%;">
-                                <div class="col person" style="width:10%;">name</div>
-                                <div class="col" style="width:10%;">agent</div>
-                                <t t-foreach="range(days_in_month)" t-as="day">
+                            <div class="table">
 
-                                    <div class="col group_head" style="width:2.9%;font-size:12px;">
-                                        <t t-set="date" t-value="year +'-'+ month+'-'+str(day+1)"/>
-                                        <span t-esc="datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%a')[0]"/>
-                                        <br/>
-                                        <span t-esc="day+1"/>
-                                    </div>
-                                </t>
+                                <div class="table-header" id="heading" style="width:100%;">
+                                    <div  style="width:10%;">name</div>
+                                    <div  style="width:10%;">agent</div>
+                                    <t t-foreach="range(days_in_month)" t-as="day">
 
-                            </div>
-                            <t t-foreach="data" t-as="person">
-                                <t t-foreach="data[person]" t-as="agent">
-                                    <div class="row border">
-                                        <div class="col " style="width:10%;">
-                                            <t t-esc="person.name"/>
+                                        <div  style="width:2.8%;">
+                                            <t t-set="date" t-value="year +'-'+ month+'-'+str(day+1)"/>
+                                            <span t-esc="datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%a')[0]"/>
+                                            <br/>
+                                            <span t-esc="day+1"/>
                                         </div>
-                                        <div class="col " style="width:10%;">
-                                            <t t-esc="agent.name"/>
-                                        </div>
-                                        <t t-foreach="range(1, days_in_month+1)" t-as="day">
+                                    </t>
 
-                                            <div class="col group_data" style="width:2.9%;">
-                                                <t t-if="day in data[person][agent]">
+                                </div>
+                                <div class="table-body">
+                                    <t t-foreach="data" t-as="person">
+                                        <t t-foreach="data[person]" t-as="agent">
+                                            <div class="table-row">
+                                                <div  style="width:10%;">
+                                                    <t t-esc="person.name"/>
+                                                </div>
+                                                <div style="width:10%;">
+                                                    <t t-esc="agent.name"/>
+                                                </div>
+                                                <t t-foreach="range(1, days_in_month+1)" t-as="day">
 
-                                                    <span t-esc="data[person][agent][day]" style="font-size: 8px;"/>
+                                                    <div  style="width:2.9%;">
+                                                        <t t-if="day in data[person][agent]">
+
+                                                            <span t-esc="data[person][agent][day]" style="font-size: 8px;"/>
+                                                        </t>
+                                                    </div>
                                                 </t>
                                             </div>
-                                        </t>
-                                    </div>
 
-                                </t>
-                            </t>
+                                        </t>
+                                    </t>
+                                </div>
+                            </div>
+
                             <div class="row border">
                                 <div class="col-2">
                                     Legend:
