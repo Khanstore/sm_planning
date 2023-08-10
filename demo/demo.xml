@@ -1,12 +1,5 @@
 <odoo>
     <data>
-<!--
-          <record id="pmis_publication_1" model="pmis.publications">
-            <field name="person_id" ref="pmis_contact_ashraf"/>
-            <field name="publication_type">periodicals</field>
-            <field name="description">Floood in Burichang</field>
-            <field name="publish_date">2021-02-15</field>
-          </record>
-        -->
+
     </data>
 </odoo>

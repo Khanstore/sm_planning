@@ -67,7 +67,8 @@ class SMplanningSlot(models.TransientModel):
 class SmSwissReport(models.AbstractModel):
     _name = 'report.sm_planning.sm_swis_report'
 
-    totals={}
+    def get_report_paperformat(self, docids, data=None):
+        return self.env.ref('report.paperformat_custom_format').sudo()
     def get_data(self,res): #here res is planning.slot in the date range
         data={}
         data['persons']= {}

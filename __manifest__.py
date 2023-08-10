@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+
+
 {
     'name': "Palaning By SM",
 
@@ -24,7 +27,9 @@
     # always loaded
     'data': [
         "reports/reports.xml",
+
         "views/views.xml",
+        "security/ir.model.access.csv",
 
     ],
     # only loaded in demonstration mode
