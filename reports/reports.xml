@@ -4,11 +4,11 @@
     <record id="sm_planning_partner_report_wizerd" model="ir.actions.report">
         <field name="name">Print Swis Report wizerd</field>
         <field name="model">sm.swis.report</field>
-        <field name="report_type">qweb-pdf</field>
+        <field name="report_type">qweb-html</field>
         <field name="report_name">sm_planning.sm_swis_report</field>
         <!--        <field name="report_file">hr.print_person_badge</field>-->
         <!--        <field name="print_report_name">'Print Badge - %s' % (object.name).replace('/', '')</field>-->
-                <field name="binding_model_id" ref="sm_planning.model_sm_swis_report"/>
+        <field name="binding_model_id" ref="sm_planning.model_sm_swis_report"/>
         <field name="binding_type">report</field>
     </record>
     <record id="sm_planning_partner_report" model="ir.actions.report">
@@ -29,44 +29,55 @@
                 <t t-call="web.internal_layout">
                     <style>
                         .table {
-                            display: table;
-                            }
+                        display: table;
+                        }
 
-                            .table-header {
-                            display: table-header-group;
-                            font-weight: bold;
-                            background-color: rgb(191, 191, 191);
-                            }
+                        .table-header {
+                        display: table-header-group;
+                        font-weight: bold;
+                        background-color: rgb(191, 191, 191);
+                        break-inside: avoid;
+                        }
+                        .table-footer {
+                        display: table-footer-group;
+                        font-weight: bold;
+                        background-color: rgb(198, 198, 181);
+                        break-inside: avoid;
+                        }
+                        .table-body {
+                        display: table-row-group;
+                        }
 
-                            .table-body {
-                            display: table-row-group;
-                            }
+                        .table-row {
+                        display: table-row;
+                        break-inside: avoid;
+                        }
 
-                            .table-row {
-                            display: table-row;
-                            }
+                        .table-header div,
+                        .table-row div {
+                        display: table-cell;
+                        <!--                            padding: 0 6px;-->
+                        }
 
-                            .table-header div,
-                            .table-row div {
-                            display: table-cell;
-<!--                            padding: 0 6px;-->
-                            }
-
-                            .table-header div {
-                            text-align: center;
-                            border: 1px solid rgb(255, 255, 255);
-                            }
+                        .table-header div {
+                        text-align: center;
+                        border: 1px solid rgb(255, 255, 255);
+                        }
                     </style>
                     <div class="page">
                         <div class="container" style="padding:5px;">
+                            <div class="row" style="text-align:center;">
+                                <t t-set="date" t-value="year +'-'+ month+'-'+'1'"/>
+                                <span t-esc="'Site Planning by Agents and by Activities for ' +datetime.datetime.strptime(date,'%Y-%m-%d').strftime('%B - %Y')"/>
+                            </div>
                             <div class="table">
 
-                                <div class="table-header" id="heading" style="width:100%;">
-                                    <div  style="width:10%;">name</div>
-                                    <div  style="width:10%;">agent</div>
+                                <div class="table-header" id="heading" style="width:100%;font-size: 12px;">
+                                    <div style="width:10%;">name</div>
+                                    <div style="width:10%;">agent</div>
                                     <t t-foreach="range(days_in_month)" t-as="day">
 
-                                        <div  style="width:2.8%;">
+                                        <div style="width:2.8%;">
                                             <t t-set="date" t-value="year +'-'+ month+'-'+str(day+1)"/>
                                             <span t-esc="datetime.datetime.strptime(date, '%Y-%m-%d').strftime('%a')[0]"/>
                                             <br/>
@@ -76,21 +87,22 @@
 
                                 </div>
                                 <div class="table-body">
-                                    <t t-foreach="data" t-as="person">
-                                        <t t-foreach="data[person]" t-as="agent">
+                                    <t t-foreach="data['persons']" t-as="person">
+                                        <t t-foreach="data['persons'][person]" t-as="agent">
                                             <div class="table-row">
-                                                <div  style="width:10%;">
+                                                <div style="width:10%;font-size: 10px;">
                                                     <t t-esc="person.name"/>
                                                 </div>
-                                                <div style="width:10%;">
+                                                <div style="width:10%;font-size: 10px;">
                                                     <t t-esc="agent.name"/>
                                                 </div>
                                                 <t t-foreach="range(1, days_in_month+1)" t-as="day">
 
-                                                    <div  style="width:2.9%;">
-                                                        <t t-if="day in data[person][agent]">
+                                                    <div style="width:2.9%;">
+                                                        <t t-if="day in data['persons'][person][agent]">
 
-                                                            <span t-esc="data[person][agent][day]" style="font-size: 8px;"/>
+                                                            <span t-esc="data['persons'][person][agent][day]"
+                                                                  style="font-size: 10px;"/>
                                                         </t>
                                                     </div>
                                                 </t>
@@ -99,6 +111,20 @@
                                         </t>
                                     </t>
                                 </div>
+                                <div class="table-row"  style="width:100%;background-color: rgb(168, 168, 181);font-size: 11px;">
+                                    <div style="width:20%;"></div>
+                                    <div style="width:10%;">Total :</div>
+                                    <t t-foreach="range(days_in_month)" t-as="day">
+
+                                        <div style="width:2.8%;">
+                                            <t t-if="day+1 in data['totals']">
+                                                <span t-esc="data['totals'][day+1]"/>
+                                            </t>
+                                        </div>
+                                    </t>
+
+                                </div>
+
                             </div>
 
                             <div class="row border">

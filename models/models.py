@@ -33,7 +33,7 @@ class SMplanningSlot(models.TransientModel):
                               ('5', 'May'), ('6', 'June'), ('7', 'July'), ('8', 'August'),
                               ('9', 'September'), ('10', 'October'), ('11', 'November'), ('12', 'December'), ],
                              string='Month')
-    year=fields.Selection(get_years(), string='Year', )
+    year=fields.Selection(get_years(),default='datetime.today.year', string='Year', )
 
     day_in_month=fields.Integer("days In Month", compute="get_days_in_month")
 
@@ -67,34 +67,39 @@ class SMplanningSlot(models.TransientModel):
 class SmSwissReport(models.AbstractModel):
     _name = 'report.sm_planning.sm_swis_report'
 
+    totals={}
     def get_data(self,res): #here res is planning.slot in the date range
         data={}
+        data['persons']= {}
+        data['totals']= {}
         for rec in res:
             person_id=rec.resource_id
             agent_id = rec.agent_id
             date_day = rec.start_datetime.day
             agent_data = {}
             date_data = {}
+            if date_day in data['totals']:
+                data['totals'][date_day]=data['totals'][date_day]+rec.allocated_hours
+            else:data['totals'][date_day]=rec.allocated_hours
 
-            if not person_id in data:
+
+            if not person_id in data['persons']:
                 personal_data = {}
                 # todo customise string for printing
                 string=rec.role_id.name +'\n'+str(rec.start_datetime.hour)+":"+ str(rec.start_datetime.minute)+"\n" + str(rec.end_datetime.hour)+":"+ str(rec.end_datetime.minute)
                 date_data[date_day]=string
                 agent_data[agent_id]=date_data
-                # personal_data[person_id]=agent_data
-                data[person_id]=agent_data
-            elif not agent_id in data[person_id]:  # new agent for person
+                data['persons'][person_id]=agent_data
+            elif not agent_id in data['persons'][person_id]:  # new agent for person
                 # todo customise string for printing
                 string=rec.role_id.name +'\n'+str(rec.start_datetime.hour)+":"+ str(rec.start_datetime.minute)+"\n" + str(rec.end_datetime.hour)+":"+ str(rec.end_datetime.minute)
                 date_data[date_day]=string
                 # agent_data[agent_id]=date_data
-                data[person_id][agent_id]=date_data
-            elif not date_day in data[person_id][agent_id]:
-
+                data['persons'][person_id][agent_id]=date_data
+            elif not date_day in data['persons'][person_id][agent_id]:
                 string =rec.role_id.name +'\n'+ str(rec.start_datetime.hour)+":"+ str(rec.start_datetime.minute)+"\n" + str(rec.start_datetime.hour)+":"+ str(rec.start_datetime.minute)
                 # date_data[date_day] = string
-                data[person_id][agent_id][date_day]=string
+                data['persons'][person_id][agent_id][date_day]=string
 
         return data
     def get_roles(self,res):
@@ -115,9 +120,9 @@ class SmSwissReport(models.AbstractModel):
         days_in_month=calendar.monthrange(int(wizard.year), int(wizard.month))[1]
         start_date=datetime(int(wizard.year), int(wizard.month),1)
         end_date=(start_date + relativedelta.relativedelta(months=1)).replace(day=1)
+
         if len(wizard.resource_ids.ids) > 0:
             res = self.env['planning.slot'].search([('resource_id', 'in', wizard.resource_ids.ids),('start_datetime', '>',start_date),('start_datetime', '<',end_date)])
-
         else:
             res = self.env['planning.slot'].search([('start_datetime', '>',start_date),('start_datetime', '<',end_date)])
 
