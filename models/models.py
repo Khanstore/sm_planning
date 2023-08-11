@@ -87,7 +87,7 @@ class SmSwissReport(models.AbstractModel):
             if not person_id in data['persons']:
                 personal_data = {}
                 # todo customise string for printing
-                string=rec.role_id.name +'\n'+str(rec.start_datetime.hour)+":"+ str(rec.start_datetime.minute)+"\n" + str(rec.end_datetime.hour)+":"+ str(rec.end_datetime.minute)
+                string=rec.role_id.name +'\n'+str(rec.start_datetime.hour)+":"+ str(rec.start_datetime.strftime('%M'))+"\n" + str(rec.end_datetime.hour)+":"+ str(rec.end_datetime.strftime('%M'))
                 date_data[date_day]=string
                 agent_data[agent_id]=date_data
                 data['persons'][person_id]=agent_data
