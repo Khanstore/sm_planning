@@ -140,7 +140,7 @@
 
                                         <div style="width:2.8%;">
                                             <t t-if="day+1 in data['totals']">
-                                                <span t-esc="data['totals'][day+1]"/>
+                                                <span t-esc="data['totals'][day+1]"  t-options="{'widget': 'float_time'}" />
                                             </t>
                                         </div>
                                     </t>
