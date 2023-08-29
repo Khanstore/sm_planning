@@ -13,13 +13,13 @@
 
     <!-- explicit list view definition -->
       <record id="sm_planning_slot_form_inherit" model="ir.ui.view">
-        <field name="name">sm.planning.slot.form.inheri</field>
+        <field name="name">sm.planning.slot.form.inherit</field>
         <field name="inherit_id" ref="planning.planning_view_form"/>
         <field name="priority" eval="1"/>
         <field name="model">planning.slot</field>
         <field name="arch" type="xml">
                 <field name="role_id" position="after">
-                    <field name="agent_id" placeholder="e.g. Shop Agent"/>
+                    <field name="site_id" placeholder="e.g. Apple,Hermes etc." domain="[('is_site','=',True)]" context="{'default_is_site': True,}"/>
                 </field>
         </field>
 </record>
@@ -32,10 +32,18 @@
                 <sheet>
 
                     <group>
+                        <group>
+                            <field name="report_type" widget="radio" options="{'horizontal': true}"/>
 
-                        <field name="resource_ids" widget="many2many_tags" />
-                        <field name="month" />
-                        <field name="year" />
+                            <field name="resource_ids" widget="many2many_tags" placeholder="Select Resource, If no selection , all resource is selected"/>
+                            <field name="site_ids" widget="many2many_tags" placeholder="Select Sites, If no selection , all Sites is selected"/>
+                        </group>
+                        <group>
+                            <field name="year" />
+                            <field name="month" />
+                            <field name="from_date" readonly="1" />
+                            <field name="to_date" readonly="1" />
+                        </group>
                     </group>
                 </sheet>
 
@@ -48,7 +56,7 @@
             <field name="res_model">sm.swis.report</field>
             <field name="view_mode">form</field>
 <!--            <field name="search_view_id" ref="crm.crm_opportunity_report_view_search"/>-->
-<!--            <field name="context">{'search_default_filter_opportunity': True, 'search_default_current': True}</field>-->
+<!--            <field name="context">{'default_month':'str(datetime.datetime.today().month)'}</field>-->
             <!--<field name="view_ids"
                    eval="[(5, 0, 0),
                           (0, 0, {'view_mode': 'graph', 'view_id': ref('crm_opportunity_report_view_graph')}),
