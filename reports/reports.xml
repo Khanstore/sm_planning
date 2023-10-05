@@ -37,6 +37,11 @@
         <field name="binding_type">report</field>
     </record>
 
+    <template id="resource_planning" inherit_id="planning.resource_planning">
+        <xpath expr="//t[@t-if='slot.allocated_hours']" position="replace">
+            <t t-if="slot.allocated_hours" t-out="slot.allocated_hours" t-options="{'widget': 'float_time'}"/>
+        </xpath>
+    </template>
     <template id="sm_swis_report_person">
         <t t-foreach="data['persons']" t-as="person">
             <div class="page">
