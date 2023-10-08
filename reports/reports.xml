@@ -38,8 +38,29 @@
     </record>
 
     <template id="resource_planning" inherit_id="planning.resource_planning">
+
+        <xpath expr="//table" position="before">
+            <div class="row" >
+                <div class="col-10"></div><div class="col-2"> <span t-esc="datetime.datetime.now().strftime('%Y-%m-%d')"></span> </div> </div>
+        </xpath>
         <xpath expr="//t[@t-if='slot.allocated_hours']" position="replace">
             <t t-if="slot.allocated_hours" t-out="slot.allocated_hours" t-options="{'widget': 'float_time'}"/>
+            <t t-if="total_time" >
+                <t t-set="total_time" t-value="total_time+slot.allocated_hours"/>
+            </t>
+            <t t-else="">
+            <t t-set="total_time" t-value="slot.allocated_hours"/>
+
+            </t>
+        </xpath>
+        <xpath expr="//t[@t-foreach='slots']" position="after">
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td><t t-esc="total_time" t-options="{'widget': 'float_time'}"/> </td>
+                <td></td>
+            </tr>
         </xpath>
     </template>
     <template id="sm_swis_report_person">
