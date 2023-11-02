@@ -29,10 +29,13 @@
         <field name="model">sm.swis.report</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                        <button name="print_report_1" string="Print Report" type="object" />
+                    </header>
                 <sheet>
-
                     <group>
                         <group>
+                            <field name="report_for" widget="radio" options="{'horizontal': true}"/>
                             <field name="report_type" widget="radio" options="{'horizontal': true}"/>
 
                             <field name="resource_ids" widget="many2many_tags" placeholder="Select Resource, If no selection , all resource is selected"/>

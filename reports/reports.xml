@@ -63,6 +63,136 @@
             </tr>
         </xpath>
     </template>
+    <template id="sm_swis_report_person_2">
+        <t t-foreach="data1['personal']" t-as="person">
+            <div class="page">
+                <div class="container" style="padding:5px;">
+                            <div class="row" id="report_heading">
+                                <div class="col-12" style="text-align:center;">
+                                    <t t-set="date" t-value="year +'-'+ month+'-'+'1'"/>
+                                    <div class="row" id="header_person_name">
+                                        <span t-esc="person.name"/>
+                                    </div>
+                                    <div class="row" id="header_planning">
+                                        <span t-esc="'Planning '+person.name + ' Per Sites for '+datetime.datetime.strptime(year+'-'+month,'%Y-%m').strftime('%B - %Y')"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                    <t t-foreach="data1['personal'][person]['site']" t-as="site">
+                            <div class="table">
+
+                                <div class="table-header" id="heading" style="width:100%;font-size: 12px;">
+                                    <div style="width:10%;">
+                                        <span >Worker</span>
+                                    </div>
+                                    <div style="width:10%;">
+                                        <span >Location</span>
+                                    </div>
+                                    <div style="width:10%;">
+                                        <span >Date</span>
+                                    </div>
+                                    <div style="width:10%;">
+                                        <span >Start</span>
+                                    </div>
+                                    <div style="width:10%;">
+                                        <span >End</span>
+                                    </div>
+                                    <div style="width:10%;">
+                                        <span >Working Hour</span>
+                                    </div>
+                                </div>
+                                <div class="table-body">
+
+<!--                                        <t t-foreach="data1['personal'][person]['site']" t-as="site">-->
+                                            <t t-set="slots" t-value="data1['personal'][person]['site'][site]"/>
+                                            <t t-foreach="slots" t-as="slot">
+                                                <div class="table-row">
+                                                    <t t-if="slot_index==0">
+                                                        <div style="width:10%;font-size: 10px;">
+                                                            <t t-esc="person.name"/>
+                                                        </div>
+                                                        <div style="width:10%;font-size: 10px;">
+                                                            <t t-esc="site.name"/>
+                                                        </div>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <div ></div>
+                                                        <div ></div>
+                                                    </t>
+                                                    <div style="width:10%;font-size: 10px;">
+                                                        <t t-esc="slot.start_datetime"/>
+                                                    </div>
+                                                    <div style="width:10%;font-size: 10px;">
+                                                        <t t-esc="slot.start_datetime"/>
+                                                    </div>
+                                                    <div style="width:10%;font-size: 10px;">
+                                                        <t t-esc="slot.end_datetime"/>
+                                                    </div>
+                                                    <div style="width:10%;font-size: 10px;">
+                                                        <t t-esc="slot.allocated_hours"/>
+                                                    </div>
+                                                    <t t-if="hours">
+
+                                                        <t t-set="hours" t-value="hours+slot.allocated_hours"/>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <t t-set="hours" t-value="slot.allocated_hours"/>
+
+                                                    </t>
+
+                                                </div>
+                                                <t t-if="slot_index==(len(slots)-1)">
+                                                    <div class="table-row">
+                                                        <div></div>
+                                                        <div></div>
+                                                        <div></div>
+                                                        <div></div>
+                                                        <div style="width:10%;font-size: 10px;">Total</div>
+                                                        <div style="width:10%;font-size: 10px;">
+                                                            <t t-esc="hours"/>
+                                                        </div>
+                                                    </div>
+                                                </t>
+
+                                            </t>
+
+<!--                                        </t>-->
+                                </div>
+                                <!--<div class="table-row" style="width:100%;background-color: Gainsboro;font-size: 11px;">
+                                    <div style="width:10%;">Total :</div>
+                                    <t t-foreach="range(days_in_month)" t-as="day">
+
+                                        <div style="width:2.8%;">
+                                            <t t-if="day+1 in data['totals']">
+                                                <span t-esc="data['totals'][day+1]"
+                                                      t-options="{'widget': 'float_time'}"/>
+                                            </t>
+                                        </div>
+                                    </t>
+
+                                </div>-->
+
+                            </div>
+                    </t>
+
+                            <div class="row border">
+                                <div class="col-2">
+                                    Legend:
+                                </div>
+                            </div>
+                            <t t-foreach="roles" t-as="role">
+                                <div class="row">
+                                    <t t-esc="role.name"></t>
+                                    <t t-esc="role.description"></t>
+                                </div>
+                            </t>
+                        </div>
+            </div>
+        </t>
+        
+    </template>
+
     <template id="sm_swis_report_person">
         <t t-foreach="data['persons']" t-as="person">
             <div class="page">
@@ -106,8 +236,7 @@
 
                                                     <div style="width:2.9%;">
                                                         <t t-if="day in data['persons'][person][site]">
-
-                                                            <span t-esc="data['persons'][person][site][day].splitlines()"
+                                                            <span t-esc="get_sm_format(data['persons'][person][site][day][0]).splitlines()"
                                                                   style="font-size: 10px;"/>
                                                         </t>
                                                     </div>
@@ -146,7 +275,7 @@
                         </div>
             </div>
         </t>
-        
+
     </template>
     <template id="sm_swis_report_site">
         <t t-foreach="data['sites']" t-as="site_data">
@@ -201,8 +330,8 @@
                                                         <div style="width:2.9%;">
                                                             <t t-if="day in data['persons'][person][site]">
 
-                                                                <span t-esc="data['persons'][person][site][day].splitlines()"
-                                                                      style="font-size: 10px;"/>
+                                                                <span t-esc="get_sm_format(data['persons'][person][site][day][0]).splitlines()"
+                                                                  style="font-size: 10px;"/>
                                                             </t>
                                                         </div>
                                                     </t>
@@ -245,6 +374,7 @@
         </t>
 
     </template>
+
     <template id="sm_swis_report">
 
         <t t-call="web.html_container">
@@ -292,10 +422,16 @@
                         <!--                        border: 1px solid Gainsboro;-->
                         <!--                        }-->
                     </style>
-                        <t t-if="doc.report_type=='person'">
-                            <t t-call="sm_planning.sm_swis_report_person"/>
+                        <t t-if="doc.report_for=='person'">
+                            <t t-if="doc.report_type=='report_1'">
+
+                                <t t-call="sm_planning.sm_swis_report_person"/>
+                            </t>
+                            <t t-else="">
+                                <t t-call="sm_planning.sm_swis_report_person_2"/>
+                            </t>
                         </t>
-                        <t t-if="doc.report_type=='site'">
+                        <t t-if="doc.report_for=='site'">
                             <t t-call="sm_planning.sm_swis_report_site"/>
                         </t>
                 </t>

@@ -109,6 +109,7 @@ class CustomerPortal(portal.CustomerPortal):
         return request.render("sale.portal_my_orders", values)
 
     @http.route(['/my/orders/<int:order_id>'], type='http', auth="public", website=True)
+    # todo change report for
     def portal_order_page(self, order_id, report_type=None, access_token=None, message=False, download=False, **kw):
         try:
             order_sudo = self._document_check_access('sale.order', order_id, access_token=access_token)
