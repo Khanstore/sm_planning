@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="pmis_res_partner_wizard_form" model="ir.ui.view">
+            <field name="name">pmis.report.wizard.form</field>
+            <field name="priority" eval="1"/>
+            <field name="model">pmis.report.wizard</field>
+            <field name="arch" type="xml">
+                    <form></form>
+            </field>
+    </record>
     <record id="paperformat_swis_reort" model="report.paperformat">
         <field name="name">Custom Paperformat for the swis report</field>
         <field name="default" eval="False"/>
@@ -53,6 +61,13 @@
 
             </t>
         </xpath>
+
+
+        <!-- for percentage and show percentage off-->
+
+        <xpath expr="//t[@t-if='slot.allocated_percentage and show_percentage']" position="replace">
+        </xpath>
+
         <xpath expr="//t[@t-foreach='slots']" position="after">
             <tr>
                 <td></td>
