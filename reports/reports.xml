@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="pmis_res_partner_wizard_form" model="ir.ui.view">
-            <field name="name">pmis.report.wizard.form</field>
-            <field name="priority" eval="1"/>
-            <field name="model">pmis.report.wizard</field>
-            <field name="arch" type="xml">
-                    <form></form>
-            </field>
-    </record>
+
     <record id="paperformat_swis_reort" model="report.paperformat">
         <field name="name">Custom Paperformat for the swis report</field>
         <field name="default" eval="False"/>
@@ -53,13 +46,6 @@
         </xpath>
         <xpath expr="//t[@t-if='slot.allocated_hours']" position="replace">
             <t t-if="slot.allocated_hours" t-out="slot.allocated_hours" t-options="{'widget': 'float_time'}"/>
-            <t t-if="total_time" >
-                <t t-set="total_time" t-value="total_time+slot.allocated_hours"/>
-            </t>
-            <t t-else="">
-            <t t-set="total_time" t-value="slot.allocated_hours"/>
-
-            </t>
         </xpath>
 
 
@@ -479,6 +465,61 @@
             </t>
 
         </t>
+    </template>
+
+    <template id="resource_planning" inherit_id="planning.resource_planning">
+        <xpath expr="//tbody/t/tr" position="after">
+            <t t-if="slot_index==0">
+                <t t-set="subTotal" t-value="slot.allocated_hours"/>
+            </t>
+            <t t-else="">
+            <t t-set="subTotal" t-value="subTotal+slot.allocated_hours"/>
+
+
+            </t>
+            <t t-if="slot_index==(len(slots)-1)">
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>Sub Total</td>
+                    <td >
+                        <t t-esc="subTotal" t-options="{'widget': 'float_time'}"/> </td>
+
+                </tr>
+            </t>
+        </xpath>
+        <xpath expr="//p[@style='page-break-before: always;']" position="replace">
+<!--            todo page break issue-->
+            <p style="page-break-inside: avoid;"/>
+        </xpath>
+    </template>
+
+    <template id="slot_report" inherit_id="planning.slot_report">
+
+        <xpath expr="//t[@t-set='slots']" position="replace">
+            <t t-set="slotsResource" t-value="grouped_slots[resource]" />
+            <t t-set="totalTime" t-value="grouped_slots[resource].totalAllocatedHours()"/>
+
+
+            <t t-set="slotsRoles" t-value="slotsResource._group_slots_by_role()" />
+
+            <t t-foreach="slotsRoles" t-as="role">
+                <t t-set="slots" t-value="slotsRoles[role]" />
+                <t t-call="planning.resource_planning" />
+                <t t-if="role_index==(len(slotsRoles)-1)">
+                    <t t-esc="totalTime"/>
+                    <table class="table table-striped table-sm">
+            <thead class="table-light"><tr><td>Total Time</td><td><t t-esc="totalTime"/> </td><td><t t-esc="len(slotsRoles)"/>ee </td></tr></thead></table>
+                </t>
+
+            </t>
+
+
+        </xpath>
+        <!--<xpath expr="//t[@t-call='planning.resource_planning']" position="replace">
+
+&lt;!&ndash;            <t t-call="planning.resource_planning" />&ndash;&gt;
+        </xpath>-->
     </template>
 
 </odoo>
