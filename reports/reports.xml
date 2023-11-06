@@ -464,9 +464,7 @@
                                 <br/>
                                 <t t-esc="doc.end_datetime.strftime('%H:%M')"/>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </t>
@@ -486,7 +484,7 @@
             </t>
             <t t-if="slot_index==(len(slots)-1)">
                 <tr style="background-color: Gainsboro;">
-                    <td></td>
+                    <td style="width:20%;"></td>
                     <td></td>
                     <td>Sub Total</td>
                     <td>
@@ -515,14 +513,15 @@
                 <t t-call="planning.resource_planning"/>
                 <t t-if="role_index==(len(slotsRoles)-1)">
                     <table class="table table-striped table-sm">
-                        <tbody class="table-light">
-                            <tr style="background-color: Gainsboro;"><td></td>
-                                <td>Total Time</td>
-                                <td >
-                                    <t t-esc="totalTime" t-options="{'widget': 'float_time'}"/>
-                                </td>
+                        <thead class="table-light">
+                            <tr style="background-color: Gainsboro;">
+                                <th  class="align-middle" name="role_header"></th>
+                                <th class="align-middle"></th>
+                                <th class="align-middle">Total Time</th>
+                                <th  class="align-middle"><t t-esc="totalTime" t-options="{'widget': 'float_time'}"/></th>
                             </tr>
-                        </tbody>
+                        </thead>
+
                     </table>
                 </t>
             </t>
