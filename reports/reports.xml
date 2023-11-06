@@ -473,6 +473,11 @@
     </template>
 
     <template id="resource_planning" inherit_id="planning.resource_planning">
+
+        <xpath expr="//t[@t-if='slot.allocated_percentage and show_percentage']" position="replace">
+        </xpath>>
+
+
         <xpath expr="//tbody/t/tr" position="after">
             <t t-if="slot_index==0">
                 <t t-set="subTotal" t-value="slot.allocated_hours"/>
