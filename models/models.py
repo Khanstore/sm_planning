@@ -32,4 +32,8 @@ class planningSlot(models.Model):
             total=total+rec.allocated_hours
         return total
 
-
+    def _group_slots_by_date(self,res):
+        grouped_slots = defaultdict(res.browse)
+        for slot in res.sorted(key=lambda s: s.start_datetime or ''):
+            grouped_slots[slot.start_datetime.date()] |= slot
+        return grouped_slots

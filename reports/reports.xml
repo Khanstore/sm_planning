@@ -16,6 +16,81 @@
         <field name="dpi">96</field>
     </record>
 
+
+    <template id="resource_planning_sm">
+<!--        <t t-set="show_percentage" t-value="any(s.resource_type == 'user' and s.allocated_percentage and s.allocated_percentage != 100 for s in slots)" />-->
+<!--        <t t-set="show_role" t-value="any(s.role_id for s in slots)" />-->
+<!--        <t t-set="show_time" t-value="any((s.allocated_percentage and s.allocated_percentage != 100) or s.allocated_hours for s in slots)" />-->
+<!--        <t t-set="show_name" t-value="any(s.name for s in slots)" />-->
+        <t t-foreach="slots_dated" t-as="slot_date">
+            <h5 >Date : <t t-esc="slot_date"/> </h5>
+        <table class="table table-striped table-sm">
+            <thead class="table-light">
+                <tr>
+                    <th  class="align-middle" name="role_header">Location</th>
+                    <th class="align-middle">Start</th>
+                    <th class="align-middle">Stop</th>
+                    <th  class="align-middle">Working Hour</th>
+                    <th  class="align-middle">Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                <t t-foreach="slots_dated[slot_date]" t-as="slot">
+                    <tr>
+                        <td  name="role_record" class="align-middle"><t t-if="slot.role_id" t-esc="slot.role_id.name" /></td>
+                        <td class="align-middle"><t t-esc="slot._format_datetime_to_user_tz(slot.start_datetime, env, slot.resource_id.tz)" /></td>
+                        <td class="align-middle"><t t-esc="slot._format_datetime_to_user_tz(slot.end_datetime, env, slot.resource_id.tz)" /></td>
+                        <td  class="align-middle">
+                            <t t-if="slot.allocated_hours" t-out="ceil(slot.allocated_hours)" t-options="{'widget': 'float_time'}"/>
+                            <t t-if="slot.allocated_percentage and show_percentage">
+                                (<t t-out="ceil(slot.allocated_percentage)" t-options="{'widget': 'float', 'precision': 0}"/>%)
+                            </t>
+                        </td>
+                        <td  class="align-middle"><t t-if="slot.name" t-esc="slot.name" /></td>
+                    </tr>
+                </t>
+            </tbody>
+        </table>
+        </t>
+        <p style="page-break-before: always;"></p>
+    </template>
+    <template id="sm_slot_report">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <t t-set="grouped_slots" t-value="docs._group_slots_by_resource()" />
+                <div class="page">
+                    <h1>Planning</h1>
+
+                    <t t-foreach="grouped_slots" t-as="resource">
+
+                        <h4>
+
+                            <t t-esc="'Employee: '+ resource.name" t-if="resource" />
+                            <t t-else="">Open Shifts</t>
+                        </h4>
+                        <t t-set="slots" t-value="grouped_slots[resource]" />
+                        <t t-set="slots_dated" t-value="docs._group_slots_by_date(slots)" />
+
+                        <t t-call="sm_planning.resource_planning_sm" />
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <record id="report_planning_slot_by_sm" model="ir.actions.report">
+        <field name="name">Planning by Ashraf</field>
+        <field name="model">planning.slot</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">sm_planning.sm_slot_report</field>
+        <field name="report_file">sm_planning.sm_slot_report</field>
+        <field name="print_report_name">'Planning'</field>
+        <field name="binding_model_id" ref="model_planning_slot"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+
     <record id="sm_planning_partner_report_wizerd" model="ir.actions.report">
         <field name="name">Print Swis Report wizerd</field>
         <field name="model">sm.swis.report</field>
@@ -38,7 +113,7 @@
         <field name="binding_type">report</field>
     </record>
 
-    <template id="resource_planning" inherit_id="planning.resource_planning">
+    <!--<template id="resource_planning" inherit_id="planning.resource_planning">
 
         <xpath expr="//table" position="before">
             <div class="row">
@@ -53,10 +128,7 @@
         </xpath>
 
 
-        <!-- for percentage and show percentage off-->
-
-        <xpath expr="//t[@t-if='slot.allocated_percentage and show_percentage']" position="replace">
-        </xpath>
+        &lt;!&ndash; for percentage and show percentage off&ndash;&gt;
 
         <xpath expr="//t[@t-foreach='slots']" position="after">
             <tr>
@@ -69,7 +141,7 @@
                 <td></td>
             </tr>
         </xpath>
-    </template>
+    </template>-->
     <template id="sm_swis_report_person_2">
         <t t-foreach="data1['personal']" t-as="person">
             <div class="page">
@@ -447,6 +519,7 @@
 
         </t>
     </template>
+
     <template id="sm_planning_slot">
         <t t-call="web.basic_layout">
             <t t-foreach="docs" t-as="doc">
@@ -475,7 +548,16 @@
     <template id="resource_planning" inherit_id="planning.resource_planning">
 
         <xpath expr="//t[@t-if='slot.allocated_percentage and show_percentage']" position="replace">
-        </xpath>>
+        </xpath>
+
+
+<!--        here to bypass show_role value-->
+        <xpath expr="//th[@t-if='show_role']" position="replace">
+            <th class="align-middle" name="role_header">Role</th>
+        </xpath>
+        <xpath expr="//td[@t-if='show_role']" position="replace">
+            <td  name="role_record" class="align-middle"><t t-if="slot.role_id" t-esc="slot.role_id.name" /></td>
+        </xpath>
 
 
         <xpath expr="//tbody/t/tr" position="after">
