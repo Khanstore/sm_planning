@@ -35,23 +35,31 @@
                 </tr>
             </thead>
             <tbody>
+                <t t-set="total_time_date" t-value="0"/>
                 <t t-foreach="slots_dated[slot_date]" t-as="slot">
+                    <t t-set="total_time_date" t-value="total_time_date+slot.allocated_hours"/>
+
                     <tr>
                         <td  name="role_record" class="align-middle"><t t-if="slot.role_id" t-esc="slot.role_id.name" /></td>
                         <td class="align-middle"><t t-esc="slot._format_datetime_to_user_tz(slot.start_datetime, env, slot.resource_id.tz)" /></td>
                         <td class="align-middle"><t t-esc="slot._format_datetime_to_user_tz(slot.end_datetime, env, slot.resource_id.tz)" /></td>
                         <td  class="align-middle">
                             <t t-if="slot.allocated_hours" t-out="ceil(slot.allocated_hours)" t-options="{'widget': 'float_time'}"/>
-                            <t t-if="slot.allocated_percentage and show_percentage">
-                                (<t t-out="ceil(slot.allocated_percentage)" t-options="{'widget': 'float', 'precision': 0}"/>%)
-                            </t>
+
                         </td>
                         <td  class="align-middle"><t t-if="slot.name" t-esc="slot.name" /></td>
                     </tr>
                 </t>
+                <tr><td></td><td></td><td >Total Time</td><td><t t-esc='"%.2f" % total_time_date'/></td></tr>
+                <t t-set="total_time_resource" t-value="total_time_resource+total_time_date"/>
             </tbody>
         </table>
+
         </t>
+        <table>
+
+                        <tr><td><t t-esc="resource.name"/></td><td></td><td >Total Time</td><td><t t-esc='"%.2f" % total_time_resource'/></td></tr>
+                    </table>
         <p style="page-break-before: always;"></p>
     </template>
     <template id="sm_slot_report">
@@ -62,7 +70,7 @@
                     <h1>Planning</h1>
 
                     <t t-foreach="grouped_slots" t-as="resource">
-
+                        <t t-set="total_time_resource" t-value="0"/>
                         <h4>
 
                             <t t-esc="'Employee: '+ resource.name" t-if="resource" />
@@ -73,6 +81,7 @@
 
                         <t t-call="sm_planning.resource_planning_sm" />
                     </t>
+
                 </div>
             </t>
         </t>
@@ -81,7 +90,7 @@
     <record id="report_planning_slot_by_sm" model="ir.actions.report">
         <field name="name">Planning by Ashraf</field>
         <field name="model">planning.slot</field>
-        <field name="report_type">qweb-pdf</field>
+        <field name="report_type">qweb-html</field>
         <field name="report_name">sm_planning.sm_slot_report</field>
         <field name="report_file">sm_planning.sm_slot_report</field>
         <field name="print_report_name">'Planning'</field>
