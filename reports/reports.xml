@@ -27,7 +27,12 @@
         <table class="table table-striped table-sm">
             <thead class="table-light">
                 <tr>
-                    <th  class="align-middle" name="role_header" style="width:40%;">Location</th>
+                    <t t-if="report_for==1">
+                        <th  class="align-middle" name="employee_header" style="width:40%;"> Employee</th>
+                    </t>
+                    <t t-else="">
+                        <th  class="align-middle" name="role_header" style="width:40%;">Location</th>
+                    </t>
                     <th class="align-middle" style="width:10%;">Start</th>
                     <th class="align-middle" style="width:10%;">Stop</th>
                     <th  class="align-middle" style="width:10%;">Working Hour</th>
@@ -40,9 +45,15 @@
                     <t t-set="total_time_date" t-value="total_time_date+slot.allocated_hours"/>
 
                     <tr>
+                        <t t-if="report_for==1">
+                            <td  name="role_record" class="align-middle"><t t-if="slot.role_id" t-esc="slot.resource_id.name" /></td>
+                        </t>
+                        <t t-else="">
                         <td  name="role_record" class="align-middle"><t t-if="slot.role_id" t-esc="slot.role_id.name" /></td>
+
+                        </t>
                         <td class="align-middle">
-                            <t t-esc="datetime.datetime.strptime(slot._format_datetime_to_user_tz(slot.start_datetime,env,slot.resource_id.tz),'%m/%d/%y, %H:%M %p').strftime('%H:%M %p')"  />
+                            <t t-esc="datetime.datetime.strptime(slot._format_datetime_to_user_tz(slot.start_datetime,env,slot.resource_id.tz),'%m/%d/%y, %H:%M %p').strftime('%H:%M')"  />
                         </td>
                         <td class="align-middle">
                             <t t-esc="datetime.datetime.strptime(slot._format_datetime_to_user_tz(slot.end_datetime,env,slot.resource_id.tz),'%m/%d/%y, %H:%M %p').strftime('%H:%M %p')"  />
@@ -56,6 +67,7 @@
                 </t>
                 <tr><td></td><td></td><td >Total Time</td><td><t t-esc='"%.2f" % total_time_date'/></td><td></td></tr>
                 <t t-set="total_time_resource" t-value="total_time_resource+total_time_date"/>
+
                 <t t-if="slot_date_index==(len(slots_dated)-1)">
                     <tr style="background-color: #CDCDCD;"><td colspan="3" style="background-color: #CDCDCD;">Total Time</td><td><t t-esc='"%.2f" % total_time_resource'/></td><td></td></tr>
                 </t>
@@ -66,7 +78,8 @@
 
         <p style="page-break-before: always;"></p>
     </template>
-    <template id="sm_slot_report">
+    <template id="sm_slot_report_by_resource">
+        <t t-set="report_for" t-value="0"/>
         <t t-call="web.html_container">
             <t t-call="web.external_layout">
                 <t t-set="grouped_slots" t-value="docs._group_slots_by_resource()" />
@@ -75,6 +88,7 @@
 
                     <t t-foreach="grouped_slots" t-as="resource">
                         <t t-set="total_time_resource" t-value="0"/>
+
                         <h4>
 
                             <t t-esc="'Employee: '+ resource.name" t-if="resource" />
@@ -91,12 +105,50 @@
         </t>
     </template>
 
-    <record id="report_planning_slot_by_sm" model="ir.actions.report">
-        <field name="name">Planning by Ashraf</field>
+    <template id="sm_slot_report_by_role">
+        <t t-call="web.html_container">
+            <t t-set="report_for" t-value="1"/>
+            <t t-call="web.external_layout">
+                <t t-set="grouped_slots" t-value="docs._group_slots_by_role()" />
+                <div class="page">
+                    <h1>Planning</h1>
+
+                    <t t-foreach="grouped_slots" t-as="resource">
+                        <t t-set="total_time_resource" t-value="0"/>
+
+                        <h4>
+
+                            <t t-esc="'Location: '+ resource.name" t-if="resource" />
+                            <t t-else="">Open Shifts</t>
+                        </h4>
+                        <t t-set="slots" t-value="grouped_slots[resource]" />
+                        <t t-set="slots_dated" t-value="docs._group_slots_by_date(slots)" />
+
+                        <t t-call="sm_planning.resource_planning_sm" />
+                    </t>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+
+    <record id="report_planning_slot_by_resource" model="ir.actions.report">
+        <field name="name">Planning by Resource</field>
         <field name="model">planning.slot</field>
         <field name="report_type">qweb-html</field>
-        <field name="report_name">sm_planning.sm_slot_report</field>
-        <field name="report_file">sm_planning.sm_slot_report</field>
+        <field name="report_name">sm_planning.sm_slot_report_by_resource</field>
+        <field name="report_file">sm_planning.sm_slot_report_resource</field>
+        <field name="print_report_name">'Planning'</field>
+        <field name="binding_model_id" ref="model_planning_slot"/>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="report_planning_slot_by_role" model="ir.actions.report">
+        <field name="name">Planning by Role</field>
+        <field name="model">planning.slot</field>
+        <field name="report_type">qweb-html</field>
+        <field name="report_name">sm_planning.sm_slot_report_by_role</field>
+        <field name="report_file">sm_planning.sm_slot_report_role</field>
         <field name="print_report_name">'Planning'</field>
         <field name="binding_model_id" ref="model_planning_slot"/>
         <field name="binding_type">report</field>
@@ -115,17 +167,17 @@
         <field name="binding_model_id" ref="sm_planning.model_sm_swis_report"/>
         <field name="binding_type">report</field>
     </record>
-    <record id="sm_planning_partner_report" model="ir.actions.report">
+    <!--<record id="sm_planning_partner_report" model="ir.actions.report">
         <field name="name">Print Swis Report</field>
         <field name="model">planning.slot</field>
         <field name="report_type">qweb-pdf</field>
         <field name="report_name">sm_planning.sm_planning_slot</field>
-        <!--        <field name="report_file">hr.print_person_badge</field>-->
-        <!--        <field name="print_report_name">'Print Badge - %s' % (object.name).replace('/', '')</field>-->
+        &lt;!&ndash;        <field name="report_file">hr.print_person_badge</field>&ndash;&gt;
+        &lt;!&ndash;        <field name="print_report_name">'Print Badge - %s' % (object.name).replace('/', '')</field>&ndash;&gt;
         <field name="binding_model_id" ref="planning.model_planning_slot"/>
         <field name="binding_type">report</field>
     </record>
-
+-->
     <!--<template id="resource_planning" inherit_id="planning.resource_planning">
 
         <xpath expr="//table" position="before">
