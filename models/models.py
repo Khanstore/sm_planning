@@ -37,3 +37,6 @@ class planningSlot(models.Model):
         for slot in res.sorted(key=lambda s: s.start_datetime or ''):
             grouped_slots[slot.start_datetime.date()] |= slot
         return grouped_slots
+    def get_user_date_format(self):
+
+        return self.env["res.lang"].search([("code",'=',self.env.lang)]).date_format
