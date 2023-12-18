@@ -22,23 +22,25 @@
 <!--        <t t-set="show_role" t-value="any(s.role_id for s in slots)" />-->
 <!--        <t t-set="show_time" t-value="any((s.allocated_percentage and s.allocated_percentage != 100) or s.allocated_hours for s in slots)" />-->
 <!--        <t t-set="show_name" t-value="any(s.name for s in slots)" />-->
+        <table class="table table-striped table-sm">
+
+                <thead class="table-light">
+                    <tr>
+                        <t t-if="report_for==1">
+                            <th  class="align-middle" name="employee_header" style="width:20%; background-color: #CDCDCD;">  Date </th><th>Employee</th>
+                        </t>
+                        <t t-else="">
+                            <th  class="align-middle" name="role_header" style="width:40%;">  Date </th><th>Location</th>
+                        </t>
+                        <th class="align-middle" style="width:10%;">Start</th>
+                        <th class="align-middle" style="width:10%;">Stop</th>
+                        <th  class="align-middle" style="width:10%;">Working Hour</th>
+                        <th  class="align-middle" style="width:20%;">Note</th>
+                    </tr>
+                </thead>
         <t t-foreach="slots_dated" t-as="slot_date">
 <!--            <h5 >Date : <t t-esc="slot_date.strftime('%d-%m-%Y')" /> </h5>-->
-        <table class="table table-striped table-sm">
-            <thead class="table-light">
-                <tr>
-                    <t t-if="report_for==1">
-                        <th  class="align-middle" name="employee_header" style="width:20%;">  Date </th><th>Employee</th>
-                    </t>
-                    <t t-else="">
-                        <th  class="align-middle" name="role_header" style="width:40%;">  Date </th><th>Location</th>
-                    </t>
-                    <th class="align-middle" style="width:10%;">Start</th>
-                    <th class="align-middle" style="width:10%;">Stop</th>
-                    <th  class="align-middle" style="width:10%;">Working Hour</th>
-                    <th  class="align-middle" style="width:20%;">Note</th>
-                </tr>
-            </thead>
+
             <tbody>
                 <t t-set="total_time_date" t-value="0"/>
                 <t t-foreach="slots_dated[slot_date]" t-as="slot">
@@ -73,9 +75,10 @@
                     <tr style="background-color: #CDCDCD;"><td colspan="4" style="background-color: #CDCDCD;">Total Time</td><td><t t-esc='total_time_resource' t-options="{'widget': 'float_time'}"/></td><td></td></tr>
                 </t>
             </tbody>
-        </table>
+
 
         </t>
+        </table>
 
         <p style="page-break-before: always;"></p>
     </template>
